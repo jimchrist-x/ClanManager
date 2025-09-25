@@ -1,6 +1,6 @@
 public class ClanManager {
     public static void main(String[] args) {
-        clashAPI api = new clashAPI(args[0]);
-        System.out.println(api.request("/clans/%23QRLRPGG8"));
+        ClanData clashRoyale = new ClanData("%23QRLRPGG8", args[0]);
+        clashRoyale.loadAll();
     }
 }
