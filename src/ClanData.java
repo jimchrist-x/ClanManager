@@ -42,4 +42,28 @@ public class ClanData {
         loadMembers();
         loadCurrentRiverRace();
     }
+
+    public ApiResponse getWarLog() {
+        return warLog;
+    }
+
+    public ApiResponse getRiverRaceLog() {
+        return riverRaceLog;
+    }
+
+    public ApiResponse getCurrentWar() {
+        return currentWar;
+    }
+
+    public ApiResponse getClanInfo() {
+        return clanInfo;
+    }
+
+    public ApiResponse getMembers() {
+        return members;
+    }
+
+    public ApiResponse getCurrentRiverRace() {
+        return currentRiverRace;
+    }
 }
