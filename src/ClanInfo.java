@@ -220,7 +220,7 @@ public class ClanInfo {
         return location;
     }
 
-    public Member[] getMember() {
-        return member;
+    public Member getMember(int index) {
+        return member[index];
     }
 }
