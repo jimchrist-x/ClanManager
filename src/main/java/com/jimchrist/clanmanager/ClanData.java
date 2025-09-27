@@ -1,3 +1,5 @@
+package com.jimchrist.clanmanager;
+
 public class ClanData {
     ClashAPI api;
     String clanTag;

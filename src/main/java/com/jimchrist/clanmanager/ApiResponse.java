@@ -1,3 +1,4 @@
+package com.jimchrist.clanmanager;
 public class ApiResponse {
     private int statusCode;
     private String body;

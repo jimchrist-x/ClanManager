@@ -9,9 +9,11 @@ ClanManager is a CLI application for the [Clash Royale API](https://developer.cl
 
 Before you continue, make sure you generate your [API_KEY](https://developer.clashroyale.com)
 
-`javac -classpath /path/to/JSON-java src/*.java -d out/`
+`./mvnw clean install`
 
-`java out/ClanManager --key API_KEY`
+`cd target/`
+
+`java -jar clanmanager-1.0-SNAPSHOT.jar`
 
 ## Future Additions
 

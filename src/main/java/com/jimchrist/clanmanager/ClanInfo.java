@@ -1,4 +1,5 @@
-import org.json.JSONArray;
+package com.jimchrist.clanmanager;
+
 import org.json.JSONObject;
 
 class Arena {
@@ -16,10 +17,10 @@ class Arena {
     }
 }
 class Location {
-    private int id;
-    private String name;
-    private boolean isCountry;
-    private String countryCode;
+    private final int id;
+    private final String name;
+    private final boolean isCountry;
+    private final String countryCode;
     public  Location(int id, String name, boolean isCountry, String countryCode) {
         this.id = id;
         this.name = name;
