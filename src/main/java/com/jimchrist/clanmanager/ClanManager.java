@@ -1,5 +1,5 @@
 package com.jimchrist.clanmanager;
-
+import com.opencsv.CSVWriter;
 import org.apache.commons.cli.*;
 public class ClanManager {
     public static void main(String[] args) {
@@ -30,6 +30,5 @@ public class ClanManager {
                 }
             }
         }
-
     }
 }

@@ -163,6 +163,10 @@ public class ClanInfo {
                         memberData.getInt("clanChestPoints"));
             }
         }
+        else {
+            System.err.println("Error retrieving data, status code: " + clan.getClanInfo().getStatusCode());
+            System.exit(1);
+        }
     }
 
     public String getTag() {
