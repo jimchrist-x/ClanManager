@@ -14,9 +14,11 @@ public class Arguments {
                 .desc("Modules include: claninfo").hasArg().build();
         Option apiKey = Option.builder("k").argName("key")
                 .longOpt("key").desc("Clash Royale API key").hasArg().required().build();
+        Option csv = Option.builder("c").argName("csv").longOpt("csv").desc("Write to CSV").build();
         helpOnly.addOption("h", "help",false, "Help page");
         options.addOption(apiKey);
         options.addOption(module);
+        options.addOption(csv);
         try {
             CommandLine helpCmd = parser.parse(helpOnly, args, true);
             if (helpCmd.hasOption("help")) {
