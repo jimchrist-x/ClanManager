@@ -7,8 +7,8 @@ public class ClanManager {
         ClanData clashRoyale;
         Arguments  arguments = new Arguments(args);
         CommandLine cmd=arguments.getCmd();
-        if (cmd.hasOption("key")) {
-            clashRoyale = new ClanData("%23QRLRPGG8", cmd.getOptionValue("k"));
+        if (cmd.hasOption("key") && cmd.hasOption("tag")) {
+            clashRoyale = new ClanData("%23"+cmd.getOptionValue("tag").replace("#", "").toUpperCase(), cmd.getOptionValue("k"));
             boolean hasCsv = cmd.hasOption("csv");
             if (cmd.hasOption("module")) {
                 switch (cmd.getOptionValue("module")) {

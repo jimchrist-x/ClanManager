@@ -1,9 +1,6 @@
 # ClanManager
 ClanManager is a CLI application for the [Clash Royale API](https://developer.clashroyale.com/)
 ## Installation
-**Dependencies:**
-- [JSON-java](https://github.com/stleary/JSON-java)
-- [Commons-cli](https://github.com/apache/commons-cli)
 
 **API_KEY**
 

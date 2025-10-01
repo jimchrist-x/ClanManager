@@ -9,6 +9,9 @@ class Arena {
         this.id = id;
         this.name = name;
     }
+
+    // Getters
+
     public int getId() {
         return id;
     }
@@ -27,6 +30,9 @@ class Location {
         this.isCountry = isCountry;
         this.countryCode = countryCode;
     }
+
+    // Getters
+
     public int getId() {
         return id;
     }
@@ -168,7 +174,7 @@ public class ClanInfo {
             System.exit(1);
         }
     }
-
+    // Getters
     public String getTag() {
         return tag;
     }

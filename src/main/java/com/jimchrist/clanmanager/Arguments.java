@@ -1,7 +1,9 @@
 package com.jimchrist.clanmanager;
 
 import org.apache.commons.cli.*;
-
+/*
+* This class handles the command line arguments
+*/
 public class Arguments {
     private Options options;
     private CommandLineParser parser;
@@ -15,10 +17,13 @@ public class Arguments {
         Option apiKey = Option.builder("k").argName("key")
                 .longOpt("key").desc("Clash Royale API key").hasArg().required().build();
         Option csv = Option.builder("c").argName("csv").longOpt("csv").desc("Write to CSV").build();
+        Option clanTag = Option.builder("t").argName("tag").longOpt("tag").desc("Clan tag").hasArg().required().build();
         helpOnly.addOption("h", "help",false, "Help page");
         options.addOption(apiKey);
         options.addOption(module);
         options.addOption(csv);
+        options.addOption(clanTag);
+        // We first parse the helpOnly options, then the normal options. If helpOnly is present, we exit.
         try {
             CommandLine helpCmd = parser.parse(helpOnly, args, true);
             if (helpCmd.hasOption("help")) {
@@ -38,6 +43,7 @@ public class Arguments {
             System.exit(1);
         }
     }
+    // Getters
     public CommandLine getCmd() {
         return cmd;
     }

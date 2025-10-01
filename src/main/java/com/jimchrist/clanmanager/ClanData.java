@@ -1,5 +1,9 @@
 package com.jimchrist.clanmanager;
 
+/*
+* This class uses the ClashAPI class to retrieve all kinds of data of a clan
+*/
+
 public class ClanData {
     ClashAPI api;
     String clanTag;
@@ -36,7 +40,7 @@ public class ClanData {
         currentRiverRace = api.request(directory + clanTag + "/currentriverrace");
     }
 
-    public void loadAll() {
+    public void loadAll() { // Hardly ever used method, for testing purposes only
         loadWarLog();
         loadRiverRaceLog();
         loadCurrentWar();
