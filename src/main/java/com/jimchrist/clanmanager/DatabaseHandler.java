@@ -16,11 +16,21 @@ public class DatabaseHandler {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        defaultTableSetup(); // may cause errors if table already created
+        defaultTableSetup();
+    }
+
+    private boolean tableExists(String tableName) throws SQLException {
+        DatabaseMetaData meta = conn.getMetaData();
+        ResultSet resultSet = meta.getTables(null, null, tableName.toUpperCase(), new String[]{"TABLE"});
+        return resultSet.next();
     }
 
     public boolean defaultTableSetup() {
         try (Statement stmt = conn.createStatement()) {
+            if (tableExists("CLANS") || tableExists("CLAN_MEMBERS")) {
+                return true;
+            }
+
             String createClans = "CREATE TABLE clans (\n" +
                     "    clan_tag VARCHAR2(20) PRIMARY KEY,\n" +
                     "    name VARCHAR2(100) NOT NULL,\n" +
@@ -62,18 +72,18 @@ public class DatabaseHandler {
 
             stmt.execute(createClans);
             stmt.execute(createMembers);
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
-        return true;
     }
 
-    public boolean deleteTables(){
+    public boolean deleteTables() {
         try (Statement stmt = conn.createStatement()) {
             stmt.execute("DROP TABLE clan_members CASCADE CONSTRAINTS");
             stmt.execute("DROP TABLE clans CASCADE CONSTRAINTS");
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }

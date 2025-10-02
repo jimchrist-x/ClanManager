@@ -2,6 +2,10 @@ package com.jimchrist.clanmanager;
 
 import org.apache.commons.cli.*;
 
+import javax.xml.crypto.Data;
+import java.io.FileReader;
+import java.util.Properties;
+
 public class ClanManager {
     public static void main(String[] args) {
         ClanData clashRoyale;
@@ -10,6 +14,22 @@ public class ClanManager {
         if (cmd.hasOption("key") && cmd.hasOption("tag")) {
             clashRoyale = new ClanData("%23"+cmd.getOptionValue("tag").replace("#", "").toUpperCase(), cmd.getOptionValue("k"));
             boolean hasCsv = cmd.hasOption("csv");
+            boolean hasSql = cmd.hasOption("sql");
+            String urlOracle="jdbc:oracle:thin:@localhost:1521:XE", usernameOracle="clanmanager", passwordOracle="password123";
+            DatabaseHandler database = null;
+            if (hasSql) {
+                Properties sqlProps = new Properties();
+                try (FileReader reader = new FileReader("config/db.properties")) {
+                    sqlProps.load(reader);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    System.exit(1);
+                }
+                urlOracle = sqlProps.getProperty("db.url");
+                usernameOracle = sqlProps.getProperty("db.user");
+                passwordOracle = sqlProps.getProperty("db.password");
+                database = new DatabaseHandler(urlOracle, usernameOracle, passwordOracle);
+            }
             if (cmd.hasOption("module")) {
                 switch (cmd.getOptionValue("module")) {
                     case "claninfo":
@@ -33,7 +53,6 @@ public class ClanManager {
                                     String.valueOf(clanInfo.getDonationsPerWeek()), String.valueOf(clanInfo.getClanChestLevel()),
                                     String.valueOf(clanInfo.getClanChestMaxLevel()), String.valueOf(clanInfo.getMembers())});
                         }
-
                         for (int i=0;i<clanInfo.getMembers();i++) {
                             System.out.printf("Players tag is %s his/her nickname is %s. He/her is a %s in the clan.\n" +
                                     "He/her was last seen at %s. His/her stats are:\nExpLevel: %d\nTrophies: %d\nArena: %s\n" +
@@ -59,6 +78,9 @@ public class ClanManager {
                         if (hasCsv) {
                             csvClanInfo.close();
                             csvMembers.close();
+                        }
+                        if (hasSql) {
+                            database.insertBoth(clanInfo);
                         }
                         break;
                     default:
