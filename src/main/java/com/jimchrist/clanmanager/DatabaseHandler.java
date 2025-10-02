@@ -71,8 +71,8 @@ public class DatabaseHandler {
 
     public boolean deleteTables(){
         try (Statement stmt = conn.createStatement()) {
-            stmt.execute("DROP TABLE clan_members CASCADE CONSTRAINTS;");
-            stmt.execute("DROP TABLE clans CASCADE CONSTRAINTS;");
+            stmt.execute("DROP TABLE clan_members CASCADE CONSTRAINTS");
+            stmt.execute("DROP TABLE clans CASCADE CONSTRAINTS");
         }catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -112,7 +112,7 @@ public class DatabaseHandler {
                 System.out.println("Inserted clan data for: " + clanInfo.getName());
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             return false;
         }
         return true;
@@ -152,7 +152,7 @@ public class DatabaseHandler {
                 System.out.println("Inserted " + clanInfo.getMembers() + " members for clan: " + clanInfo.getName());
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            //e.printStackTrace();
             return false;
         }
         return true;
