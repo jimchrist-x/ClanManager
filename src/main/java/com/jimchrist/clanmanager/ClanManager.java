@@ -2,7 +2,6 @@ package com.jimchrist.clanmanager;
 
 import org.apache.commons.cli.*;
 
-import javax.xml.crypto.Data;
 import java.io.FileReader;
 import java.util.Properties;
 
@@ -28,7 +27,12 @@ public class ClanManager {
                 urlOracle = sqlProps.getProperty("db.url");
                 usernameOracle = sqlProps.getProperty("db.user");
                 passwordOracle = sqlProps.getProperty("db.password");
-                database = new DatabaseHandler(urlOracle, usernameOracle, passwordOracle);
+                try {
+                    database = new DatabaseHandler(urlOracle, usernameOracle, passwordOracle);
+                } catch(Exception e) {
+                    e.printStackTrace();
+                    System.exit(1);
+                }
             }
             if (cmd.hasOption("module")) {
                 switch (cmd.getOptionValue("module")) {
@@ -43,13 +47,14 @@ public class ClanManager {
                                     "ExpLevel", "Trophies", "Arena", "Clan Rank", "Prev Clan Rank", "Donations",
                                     "Donations Received", "Clan Chest Points"});
                             csvClanInfo.writeHeaders(new String[]{"Tag", "Name", "Type", "Description",
-                                    "Clan Chest Status", "Badge Id", "Clan Score", "Clan War Trophies",
+                                    "Clan Chest Status", "Badge Id", "Clan Score", "Clan War Trophies", "Location",
                                     "Required Trophies", "Donations Per Week", "Clan Chest Level",
                                     "Clan Chest Max Level", "Members"});
                             csvClanInfo.writeLine(new String[]{clanInfo.getTag(), clanInfo.getName(),
                                     clanInfo.getType(), clanInfo.getDescription(), clanInfo.getClanChestStatus(),
                                     String.valueOf(clanInfo.getBadgeId()), String.valueOf(clanInfo.getClanScore()),
-                                    String.valueOf(clanInfo.getClanWarTrophies()),String.valueOf(clanInfo.getRequiredTrophies()),
+                                    String.valueOf(clanInfo.getClanWarTrophies()), clanInfo.getLocation().getName(),
+                                    String.valueOf(clanInfo.getRequiredTrophies()),
                                     String.valueOf(clanInfo.getDonationsPerWeek()), String.valueOf(clanInfo.getClanChestLevel()),
                                     String.valueOf(clanInfo.getClanChestMaxLevel()), String.valueOf(clanInfo.getMembers())});
                         }

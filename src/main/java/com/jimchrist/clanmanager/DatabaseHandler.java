@@ -40,6 +40,7 @@ public class DatabaseHandler {
                     "    badge_id NUMBER,\n" +
                     "    clan_score NUMBER,\n" +
                     "    clan_war_trophies NUMBER,\n" +
+                    "    location VARCHAR2(100), \n" +
                     "    required_trophies NUMBER,\n" +
                     "    donations_per_week NUMBER,\n" +
                     "    clan_chest_level NUMBER,\n" +
@@ -98,10 +99,10 @@ public class DatabaseHandler {
         try {
             String sql = "INSERT INTO clans (\n" +
                     "    clan_tag, name, type, description, clan_chest_status, \n" +
-                    "    badge_id, clan_score, clan_war_trophies, required_trophies, \n" +
+                    "    badge_id, clan_score, clan_war_trophies, location, required_trophies, \n" +
                     "    donations_per_week, clan_chest_level, clan_chest_max_level, \n" +
                     "    members_count\n" +
-                    ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setString(1, clanInfo.getTag());
@@ -112,11 +113,12 @@ public class DatabaseHandler {
                 pstmt.setInt(6, clanInfo.getBadgeId());
                 pstmt.setInt(7, clanInfo.getClanScore());
                 pstmt.setInt(8, clanInfo.getClanWarTrophies());
-                pstmt.setInt(9, clanInfo.getRequiredTrophies());
-                pstmt.setInt(10, clanInfo.getDonationsPerWeek());
-                pstmt.setInt(11, clanInfo.getClanChestLevel());
-                pstmt.setInt(12, clanInfo.getClanChestMaxLevel());
-                pstmt.setInt(13, clanInfo.getMembers());
+                pstmt.setString(9, clanInfo.getLocation().getName());
+                pstmt.setInt(10, clanInfo.getRequiredTrophies());
+                pstmt.setInt(11, clanInfo.getDonationsPerWeek());
+                pstmt.setInt(12, clanInfo.getClanChestLevel());
+                pstmt.setInt(13, clanInfo.getClanChestMaxLevel());
+                pstmt.setInt(14, clanInfo.getMembers());
 
                 pstmt.executeUpdate();
                 System.out.println("Inserted clan data for: " + clanInfo.getName());
