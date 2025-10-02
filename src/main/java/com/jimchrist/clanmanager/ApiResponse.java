@@ -10,10 +10,10 @@ public class ApiResponse {
         this.body=body;
     }
     // Getters
-    int getStatusCode() {
+    public int getStatusCode() {
         return this.statusCode;
     }
-    String getBody() {
+    public String getBody() {
         return this.body;
     }
 }
