@@ -83,7 +83,7 @@ public class DatabaseHandler {
 
 
     // i didnt include LOCATION logging because it errored too much for me to bother caring to fix
-    // check ClanInfo.java:159 i commented out stuff temporarily
+    // check ClanInfo.java:159 i put stuff in try condition temporarily
     public boolean insertClanData(ClanInfo clanInfo) {
         try {
             String sql = "INSERT INTO clans (\n" +

@@ -155,9 +155,11 @@ public class ClanInfo {
             this.clanChestMaxLevel = data.getInt("clanChestMaxLevel");
             this.members=data.getInt("members");
             JSONObject locationData = data.getJSONObject("location");
-            // below caused errors so temporarily commented out so i can figure out how to fix later
-            //location=new Location(locationData.getInt("id"), locationData.getString("name"),
-            //        locationData.getBoolean("isCountry"), locationData.getString("countryCode"));
+            // below caused errors so temporarily put it in try condition so i can figure out how to fix later
+            try {
+                location = new Location(locationData.getInt("id"), locationData.getString("name"),
+                        locationData.getBoolean("isCountry"), locationData.getString("countryCode"));
+            }catch (Exception e){}
             member=new Member[members];
             for (int i=0;i<members;i++) {
                 JSONObject memberData = data.getJSONArray("memberList").getJSONObject(i);
