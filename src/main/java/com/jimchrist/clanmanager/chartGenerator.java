@@ -2,13 +2,30 @@ package com.jimchrist.clanmanager;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.awt.Desktop;
+
 public class chartGenerator {
     public chartGenerator(){}
 
+    public static boolean saveAndOpenInBrowser(String filePath, String html){
+        try {
+            File file = new File(filePath);
+            try (FileWriter fileWrite = new FileWriter(file)) {
+                fileWrite.write(html);
+            }
+            Desktop.getDesktop().open(file);
+            return true;
 
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     //temporary example function to showcase and test it with ease
     public static String returnHTMLChartOfMembersValues(ClanInfo data,String methodName){
-        return simpleHTMLChartGenerator(returnListMemberNameValues(data,methodName)[0],returnListMemberNameValues(data,methodName)[1]);
+        return simpleHTMLChartGenerator(returnListMemberNameValues(data,methodName)[0],returnListMemberNameValues(data,methodName)[1],"pie");
     }
 
 
@@ -53,7 +70,9 @@ public class chartGenerator {
         return result;
     }
 
-    public static String simpleHTMLChartGenerator(String[] labels, String[] values){
+    public static String simpleHTMLChartGenerator(String[] labels, String[] values, String chartType){
+        // chart type changes the style of the chart
+        // chartType options: "line", "bar", "pie", "doughnut", "polarArea", "radar", "scatter", "bubble"
         if (labels.length != values.length)
             return "Label and value list length should be equal because they reference eachother, right now they are inequal. Make sure they are equal. Right now they differ by" +labels.length + "-" +values.length;
         String labelsGenString="";
@@ -72,7 +91,7 @@ public class chartGenerator {
                 "<canvas id=\"c\"></canvas>\n" +
                 "<script>\n" +
                 "    new Chart(document.getElementById('c'), {\n" +
-                "        type: 'bar',\n" +
+                "        type: '"+chartType+"',\n" +
                 "        data: {\n" +
                 "            labels: ["+labelsGenString+"],\n" +
                 "            datasets: [{\n" +

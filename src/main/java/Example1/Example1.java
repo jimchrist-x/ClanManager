@@ -21,7 +21,7 @@ public class Example1 {
 
         chartGenerator chart = new chartGenerator();
 
-        System.out.println(chart.returnHTMLChartOfMembersValues(serializeClanIntoSql("8Q8R9LQ0"),"getExpLevel"));
+        chart.saveAndOpenInBrowser("chart.html",(chart.returnHTMLChartOfMembersValues(serializeClanIntoSql("QRUPC0CG"),"getExpLevel")));
         //sql test sect
         brah.deleteTables(); // if tables already created, delete them
         brah.defaultTableSetup(); // to create tables
