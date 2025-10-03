@@ -14,9 +14,9 @@ Before you continue, make sure you generate your [API_KEY](https://developer.cla
 
 ## Future Additions
 
-- Database Integration
+- Database Integration ✅
 - Stats logging
 - Docker support
 - Data Export (Excel format)
-- Charts
+- Charts ⚠️
 - AI analysis
