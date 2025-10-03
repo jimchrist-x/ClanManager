@@ -32,7 +32,7 @@ public class DatabaseHandler {
             }
 
             String createClans = "CREATE TABLE clans (\n" +
-                    "    clan_tag VARCHAR2(20) PRIMARY KEY,\n" +
+                    "    clan_tag VARCHAR2(20),\n" +
                     "    name VARCHAR2(100) NOT NULL,\n" +
                     "    type VARCHAR2(50),\n" +
                     "    description VARCHAR2(500),\n" +
@@ -65,10 +65,7 @@ public class DatabaseHandler {
                     "    donations NUMBER,\n" +
                     "    donations_received NUMBER,\n" +
                     "    clan_chest_points NUMBER,\n" +
-                    "    created_date DATE DEFAULT SYSDATE,\n" +
-                    "    CONSTRAINT fk_clan_tag FOREIGN KEY (clan_tag)\n" +
-                    "        REFERENCES clans(clan_tag)\n" +
-                    "        ON DELETE CASCADE\n" +
+                    "    created_date DATE DEFAULT SYSDATE\n" +
                     ")";
 
             stmt.execute(createClans);
