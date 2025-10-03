@@ -33,3 +33,5 @@ bin/
 lib/
 target/
 .mvn/
+*.csv
+dependency-reduced-pom.xml

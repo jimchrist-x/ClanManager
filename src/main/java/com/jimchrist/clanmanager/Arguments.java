@@ -19,10 +19,12 @@ public class Arguments {
         Option csv = Option.builder("c").argName("csv").longOpt("csv").desc("Write to CSV").build();
         Option clanTag = Option.builder("t").argName("tag").longOpt("tag").desc("Clan tag").hasArg().required().build();
         helpOnly.addOption("h", "help",false, "Help page");
+        Option sqlDatabase = Option.builder("s").argName("sql").longOpt("sql").desc("Oracle DB").build();
         options.addOption(apiKey);
         options.addOption(module);
         options.addOption(csv);
         options.addOption(clanTag);
+        options.addOption(sqlDatabase);
         // We first parse the helpOnly options, then the normal options. If helpOnly is present, we exit.
         try {
             CommandLine helpCmd = parser.parse(helpOnly, args, true);

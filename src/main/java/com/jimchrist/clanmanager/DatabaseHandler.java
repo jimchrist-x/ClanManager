@@ -5,7 +5,7 @@
 
 package com.jimchrist.clanmanager;
 import java.sql.*;
-
+import java.sql.Timestamp;
 public class DatabaseHandler {
     //Connection conn = DriverManager.getConnection("url", "user", "");
     Connection conn = null;
@@ -16,13 +16,23 @@ public class DatabaseHandler {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        defaultTableSetup(); // may cause errors if table already created
+        defaultTableSetup();
+    }
+
+    private boolean tableExists(String tableName) throws SQLException {
+        DatabaseMetaData meta = conn.getMetaData();
+        ResultSet resultSet = meta.getTables(null, null, tableName.toUpperCase(), new String[]{"TABLE"});
+        return resultSet.next();
     }
 
     public boolean defaultTableSetup() {
         try (Statement stmt = conn.createStatement()) {
+            if (tableExists("CLANS") || tableExists("CLAN_MEMBERS")) {
+                return true;
+            }
+
             String createClans = "CREATE TABLE clans (\n" +
-                    "    clan_tag VARCHAR2(20) PRIMARY KEY,\n" +
+                    "    clan_tag VARCHAR2(20),\n" +
                     "    name VARCHAR2(100) NOT NULL,\n" +
                     "    type VARCHAR2(50),\n" +
                     "    description VARCHAR2(500),\n" +
@@ -30,6 +40,7 @@ public class DatabaseHandler {
                     "    badge_id NUMBER,\n" +
                     "    clan_score NUMBER,\n" +
                     "    clan_war_trophies NUMBER,\n" +
+                    "    location VARCHAR2(100), \n" +
                     "    required_trophies NUMBER,\n" +
                     "    donations_per_week NUMBER,\n" +
                     "    clan_chest_level NUMBER,\n" +
@@ -54,26 +65,23 @@ public class DatabaseHandler {
                     "    donations NUMBER,\n" +
                     "    donations_received NUMBER,\n" +
                     "    clan_chest_points NUMBER,\n" +
-                    "    created_date DATE DEFAULT SYSDATE,\n" +
-                    "    CONSTRAINT fk_clan_tag FOREIGN KEY (clan_tag)\n" +
-                    "        REFERENCES clans(clan_tag)\n" +
-                    "        ON DELETE CASCADE\n" +
+                    "    created_date DATE DEFAULT SYSDATE\n" +
                     ")";
 
             stmt.execute(createClans);
             stmt.execute(createMembers);
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
-        return true;
     }
 
-    public boolean deleteTables(){
+    public boolean deleteTables() {
         try (Statement stmt = conn.createStatement()) {
             stmt.execute("DROP TABLE clan_members CASCADE CONSTRAINTS");
             stmt.execute("DROP TABLE clans CASCADE CONSTRAINTS");
-        }catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
@@ -88,10 +96,10 @@ public class DatabaseHandler {
         try {
             String sql = "INSERT INTO clans (\n" +
                     "    clan_tag, name, type, description, clan_chest_status, \n" +
-                    "    badge_id, clan_score, clan_war_trophies, required_trophies, \n" +
+                    "    badge_id, clan_score, clan_war_trophies, location, required_trophies, \n" +
                     "    donations_per_week, clan_chest_level, clan_chest_max_level, \n" +
                     "    members_count\n" +
-                    ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                    ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
             try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 pstmt.setString(1, clanInfo.getTag());
@@ -102,11 +110,12 @@ public class DatabaseHandler {
                 pstmt.setInt(6, clanInfo.getBadgeId());
                 pstmt.setInt(7, clanInfo.getClanScore());
                 pstmt.setInt(8, clanInfo.getClanWarTrophies());
-                pstmt.setInt(9, clanInfo.getRequiredTrophies());
-                pstmt.setInt(10, clanInfo.getDonationsPerWeek());
-                pstmt.setInt(11, clanInfo.getClanChestLevel());
-                pstmt.setInt(12, clanInfo.getClanChestMaxLevel());
-                pstmt.setInt(13, clanInfo.getMembers());
+                pstmt.setString(9, clanInfo.getLocation().getName());
+                pstmt.setInt(10, clanInfo.getRequiredTrophies());
+                pstmt.setInt(11, clanInfo.getDonationsPerWeek());
+                pstmt.setInt(12, clanInfo.getClanChestLevel());
+                pstmt.setInt(13, clanInfo.getClanChestMaxLevel());
+                pstmt.setInt(14, clanInfo.getMembers());
 
                 pstmt.executeUpdate();
                 System.out.println("Inserted clan data for: " + clanInfo.getName());
