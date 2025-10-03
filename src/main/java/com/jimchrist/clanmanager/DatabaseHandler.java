@@ -5,7 +5,7 @@
 
 package com.jimchrist.clanmanager;
 import java.sql.*;
-
+import java.sql.Timestamp;
 public class DatabaseHandler {
     //Connection conn = DriverManager.getConnection("url", "user", "");
     Connection conn = null;
